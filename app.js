@@ -1,11 +1,11 @@
-// require('dotenv').config();
+require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
-const routes = require('./routes/routes');
+const session = require('express-session');
+const routes = require('./routes/router');
 // const api = require('./routes/api');
 
 require('custom-env').env(process.env.NODE_ENV, './config');
@@ -20,13 +20,19 @@ console.log(db);
 const server = express();
 
 server.use(express.static('public'))
-server.use(cors());
+// server.use(cors());
 server.use(bodyParser.urlencoded({extended : true}));
 server.use(express.json());
 server.set('view engine','ejs');
+server.use(session({
+    secret: 'myaoo',    
+    saveUninitialized: false,
+    resave: false
+}))
 
+server.use("/", require("./routes/router"));
 // app.use('/api', api);
-server.use('', routes);
+// server.use('', routes);
 
 server.listen(PORT, ()=>{
     console.log(`http://localhost:${PORT}`);
