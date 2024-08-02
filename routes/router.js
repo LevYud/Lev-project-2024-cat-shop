@@ -6,6 +6,7 @@ const pagesController = require('../controllers/pagesController');
 
 
 router.get("/", pagesController.showMainPage);
+router.get("/store", pagesController.showStorePage);
 
 router.get('/profile', loginController.isLoggedIn, loginController.profile);
 // router.get('/profile', loginController.isLoggedIn, pagesController.showMainPage);

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Murr! by Lev Y</title>
+    <link
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+        rel="stylesheet" />
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+        rel="stylesheet">
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .btn{
+            background: #ce7d36;
+            color: white;
+            border: none;
+        }
+
+        .btn:hover{
+            background: #eea564;
+            color: white;
+            border: none;
+        }
+
+        .price-output {
+            display: inline-block;
+            width: 50px;
+            text-align: center;
+        }
+        .filter-sidebar {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 7vh;
+            height: 90vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+        .search-bar {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 7vh;
+            z-index: 1000;
+            background-color: white;
+            padding: 10px 0;
+        }
+        .search-bar .input-group {
+            max-width: 300px;
+        }
+        .search-bar .form-control {
+            margin-right: 5px;
+            /* Adjust the spacing between the input and the button */
+        }
+        /* Slider custom styles */
+        #slider-range {
+            height: 10px;
+            box-shadow: none;
+            background: white;
+        }
+        #slider-range .noUi-connect {
+            background: #ce7d36;
+        }
+        #slider-range .noUi-handle {
+            height: 18px;
+            width: 18px;
+            top: -5px;
+            right: -9px;
+            box-shadow: none;
+            border-radius: 9px;
+        }
+        #slider-range .noUi-handle::before,
+        #slider-range .noUi-handle::after {
+            display: none;
+        }
+        @media (max-width: 576px) {
+            .filter-sidebar {
+                transform: translateX(-100%);
+            }
+            .filter-sidebar.show {
+                transform: translateX(0);
+            }
+            .card-horizontal {
+                display: flex;
+                flex-direction: row;
+            }
+            .card-horizontal img {
+                width: 150px;
+                height: auto;
+            }
+            .card-horizontal .card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- navbar-->
+    <nav class="navbar navbar-expand-lg justify-content-between sticky-top">
+        <div class="container">
+            <a href="">
+                <h3 class="logo mt-1">😺 Murr<span>!</span></h3>
+            </a>
+            <button class="navbar-toggler" data-bs-toggle="collapse"
+                data-bs-target="navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <h2 class="mt-2"><i class="ri-menu-fold-2-line"></i></h2>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="about">מידע חיוני</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link store-link" href="store">החנות
+                            הורטואלית</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact">צור קשר</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="icon-section" id="navbarNav">
+                <div class="row">
+                    <div class="nav-item col-4">
+                        <a class="nav-link" href="liked">
+                            <h5 class="mt-2"><i
+                                    class="ri-heart-fill active"></i></h5>
+                        </a>
+                    </div>
+                    <div class="nav-item col-4">
+                        <a class="nav-link" href="cart">
+                            <h5 class="mt-2"><i class="ri-shopping-cart-fill">
+                            </h5></i>
+                        </a>
+                    </div>
+                    <div class="nav-item col-4">
+                        <a class="nav-link" href="profile">
+                            <h5 class="mt-2"><i class="ri-user-fill"></i></h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- <a href="" class="btn btn-brand ms-lg-3">Download</a> -->
+        </div>
+    </nav>
+    <!-- navbar-->
+    <!-- store -->
+    <section id="store" class="min-vh-100 d-flex">
+        <div class="container">
+            <h1 class="my-4">חנות מזון לחתולים</h1>
+            <div class="row">
+                <!-- Filters Sidebar -->
+                <div class="col-md-3 filter-sidebar d-none d-md-block"
+                    id="filterSidebar">
+                    <h4>מסננים</h4>
+                    <form>
+                        <div class="form-group">
+                            <label for="brand">מותג</label>
+                            <select class="form-control" id="brand">
+                                <option>כל המותגים</option>
+                                <option>מותג א'</option>
+                                <option>מותג ב'</option>
+                                <option>מותג ג'</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="food-type">סוג מזון</label>
+                            <select class="form-control" id="food-type">
+                                <option>כל הסוגים</option>
+                                <option>מזון יבש</option>
+                                <option>מזון רטוב</option>
+                                <option>חטיפים</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="price-range">טווח מחירים</label>
+                            <div class="slider-styled" id="slider-range"></div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <span>₪<span id="min-price">0</span></span>
+                                <span>₪<span id="max-price">50</span></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>גיל</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="kitten-pregnant">
+                                <label class="form-check-label"
+                                    for="kitten-pregnant">
+                                    גור/חתולה הרה
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="adult">
+                                <label class="form-check-label" for="adult">
+                                    בוגר
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="senior">
+                                <label class="form-check-label" for="senior">
+                                    מבוגר (סניור)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>צרכים מיוחדים</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="urinary">
+                                <label class="form-check-label" for="urinary">
+                                    יורינרי
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="sterilized">
+                                <label class="form-check-label"
+                                    for="sterilized">
+                                    סטרילייזד
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="hypoallergenic">
+                                <label class="form-check-label"
+                                    for="hypoallergenic">
+                                    היפואלרגני
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="hairball">
+                                <label class="form-check-label" for="hairball">
+                                    כדורי שער
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="weight-control">
+                                <label class="form-check-label"
+                                    for="weight-control">
+                                    לשמירה על המשקל
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>סוג מזון</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="premium">
+                                <label class="form-check-label" for="premium">
+                                    פרימיום
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    value="" id="ultra-premium">
+                                <label class="form-check-label"
+                                    for="ultra-premium">
+                                    אולטרה פרימיום
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn">החל
+                            מסננים</button>
+                    </form>
+                </div>
+                <!-- Product List -->
+                <div class="col-md-9">
+                    <div class="search-bar">
+                        <form class="form-inline">
+                            <div class="input-group">
+                                <input class="form-control" type="search"
+                                    placeholder="חיפוש" aria-label="חיפוש">
+                                <div class="input-group-append">
+                                    <button class="btn"
+                                        type="submit">חפש</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <!-- Product Items -->
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 1">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 1</h5>
+                                    <p class="card-text">מותג א' - מזון יבש</p>
+                                    <p class="card-text">₪15.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 2">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 2</h5>
+                                    <p class="card-text">מותג ב' - מזון רטוב</p>
+                                    <p class="card-text">₪25.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 3">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 3</h5>
+                                    <p class="card-text">מותג ג' - חטיפים</p>
+                                    <p class="card-text">₪5.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 4">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 4</h5>
+                                    <p class="card-text">מותג ד' - מזון יבש</p>
+                                    <p class="card-text">₪20.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 5">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 5</h5>
+                                    <p class="card-text">מותג ה' - מזון רטוב</p>
+                                    <p class="card-text">₪30.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 6">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 6</h5>
+                                    <p class="card-text">מותג ו' - חטיפים</p>
+                                    <p class="card-text">₪10.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 7">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 7</h5>
+                                    <p class="card-text">מותג ז' - מזון יבש</p>
+                                    <p class="card-text">₪18.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 8">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 8</h5>
+                                    <p class="card-text">מותג ח' - מזון רטוב</p>
+                                    <p class="card-text">₪22.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 9">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 9</h5>
+                                    <p class="card-text">מותג ט' - חטיפים</p>
+                                    <p class="card-text">₪12.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 mb-4">
+                            <div class="card card-horizontal">
+                                <img src="https://via.placeholder.com/150"
+                                    class="card-img-top" alt="מוצר 10">
+                                <div class="card-body">
+                                    <h5 class="card-title">מזון חתולים 10</h5>
+                                    <p class="card-text">מותג י' - מזון יבש</p>
+                                    <p class="card-text">₪16.00</p>
+                                    <a href="#" class="btn">הוסף
+                                        לעגלה</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add more product items as needed -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- </section> -->
+    <!-- store -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js">
+    </script>
+    <script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js">
+    </script>
+    <script>
+        $(document).ready(function() {
+            var slider = document.getElementById('slider-range');
+            noUiSlider.create(slider, {
+                start: [0, 50],
+                connect: true,
+                range: {
+                    'min': 0,
+                    'max': 50
+                }
+            });
+            var minPrice = document.getElementById('min-price');
+            var maxPrice = document.getElementById('max-price');
+            slider.noUiSlider.on('update', function(values, handle) {
+                if (handle === 0) {
+                    minPrice.innerHTML = Math.round(values[0]);
+                } else {
+                    maxPrice.innerHTML = Math.round(values[1]);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
