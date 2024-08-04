@@ -1,0 +1,51 @@
+<!-- navbar-->
+<nav class="navbar navbar-expand-lg justify-content-between sticky-top">
+    <div class="container">
+        <a href="/">
+            <h3 class="logo mt-1">😺 Murr<span>!</span></h3>
+        </a>
+        <button class="navbar-toggler" data-bs-toggle="collapse"
+            data-bs-target="navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <h2 class="mt-2"><i class="ri-menu-fold-2-line"></i></h2>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPage==='about'?'active':'non-active'  %>" href="about">מידע חיוני</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPage==='store'?'active':'store-link'  %>" href="store">החנות
+                        הורטואלית</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <%= currentPage==='contact'?'active':'non-active'  %>" href="contact">צור קשר</a>
+                </li>
+            </ul>
+        </div>
+        <div class="icon-section" id="navbarNav">
+            <div class="row">
+                <div class="nav-item col-4">
+                    <a href="liked">
+                        <h5 class="mt-2"><i
+                                class="ri-heart-fill nav-link <%= currentPage==='liked'?'active':'non-active'  %> "></i></h5>
+                    </a>
+                </div>
+                <div class="nav-item col-4">
+                    <a href="cart">
+                        <h5 class="mt-2"><i class="ri-shopping-cart-fill nav-link <%= currentPage==='cart'?'active':'non-active'  %> ">
+                        </h5></i>
+                    </a>
+                </div>
+                <div class="nav-item col-4">
+                    <a href="profile">
+                        <h5 class="mt-2"><i class="ri-user-fill nav-link <%= currentPage==='profile'?'active':'non-active'  %> "></i></h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- <a href="" class="btn btn-brand ms-lg-3">Download</a> -->
+    </div>
+</nav>
+<!-- navbar-->

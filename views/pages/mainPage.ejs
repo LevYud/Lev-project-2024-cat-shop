@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Murr! by Lev Y</title>
+
+    <!-- cssLinks-->
+    <%- include('../partials/PageCssLinks.ejs') %>
+
+    <!-- main css-->
+    <link rel="stylesheet" href="css/pages/mainPage.css" />
+
+</head>
+
+<body>
+    <!-- navbar-->
+    <%- include('../partials/navbar.ejs', { currentPage: 'main' }) %>
+    
+    <!-- hero -->
+    <section id="main" class="min-vh-100 d-flex align-items-center text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-white fw-semibold display-1">
+                        Murr! ברוכים הבאים ל
+                    </h1>
+                    <h5 class="text-white mt-3 mb-4">חנות אוכל לחתולים</h5>
+                    <div>
+                        <a href="" class="btn btn-brand me-2">לחנות
+                            הורטואלית</a>
+                        <a href="" class="btn btn-light ms-2">להרשם</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- scriptLinks-->
+    <%- include('../partials/PageScriptLinks.ejs') %>
+
+</body>
+</html>

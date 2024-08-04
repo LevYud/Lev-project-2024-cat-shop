@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Murr! by Lev Y</title>
+
+    <!-- cssLinks-->
+    <%- include('../partials/PageCssLinks.ejs') %>
+
+    <!-- cart css-->
+    <link rel="stylesheet" href="css/pages/cartPage.css" />
+
+</head>
+<body>
+    <!-- navbar-->
+    <%- include('../partials/navbar.ejs', { currentPage: 'cart' }) %>
+
+    <!-- cart -->
+    <section id="cart" class="min-vh-100 d-flex">
+        <div class="container">
+            <h1 class="my-4">עגלת קניות</h1>
+    
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="search-bar mb-4">
+                        <form class="form-inline">
+                            <div class="input-group">
+                                <input class="form-control" type="search" placeholder="חיפוש" aria-label="חיפוש">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success" type="submit">חפש</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row" id="cart-items-container">
+                        <!-- Dynamic cart items will be inserted here -->
+                    </div>
+                    <div class="sticky-footer">
+                        <div class="container d-flex justify-content-between align-items-center">
+                            <h4 id="total-price">סך הכל: ₪0.00</h4>
+                            <button class="btn btn-primary btn-lg">סיום רכישה</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- scriptLinks-->
+    <%- include('../partials/PageScriptLinks.ejs') %>
+
+    <!-- cart script-->
+    <script src="scripts/pages/cartPage.js"></script>
+
+</body>
+</html>

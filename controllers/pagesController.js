@@ -3,25 +3,25 @@
 function showMainPage(req,res){
     // const data = pagesModel.getMainPageData()
     // res.render('articles.ejs',  { data })
-    res.render('../views/mainPage.ejs')
+    res.render('../views/pages/mainPage.ejs')
 }
 
 function showStorePage(req,res){
     // const data = pagesModel.getMainPageData()
     // res.render('articles.ejs',  { data })
-    res.render('../views/storePage.ejs')
+    res.render('../views/pages/storePage.ejs')
 }
 
 function showContactPage(req,res){
     // const data = pagesModel.getMainPageData()
     // res.render('articles.ejs',  { data })
-    res.render('../views/contactPage.ejs')
+    res.render('../views/pages/contactPage.ejs')
 }
 
 function showCartPage(req,res){
     // const data = pagesModel.getMainPageData()
     // res.render('articles.ejs',  { data })
-    res.render('../views/cartPage.ejs')
+    res.render('../views/pages/cartPage.ejs')
 }
 
 module.exports = {
