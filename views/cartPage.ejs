@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Murr! by Lev Y</title>
+    <link
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+        rel="stylesheet" />
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
+        rel="stylesheet">
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .search-bar {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 7vh;
+            z-index: 1000;
+            background-color: white;
+            padding: 10px 0;
+        }
+
+        .search-bar .input-group {
+            max-width: 300px;
+        }
+
+        .search-bar .form-control {
+            margin-right: 5px;
+        }
+
+        .card-horizontal {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .card-horizontal img {
+            width: 150px;
+            height: auto;
+        }
+
+        .card-horizontal .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .sticky-footer {
+            position: fixed;
+            bottom: 0;
+            left: 20vh;
+            right: 20vh;
+            background-color: white;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1050;
+        }
+
+        @media (max-width: 576px) {
+
+            .card-horizontal {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .card-horizontal img {
+                width: 150px;
+                height: auto;
+            }
+
+            .card-horizontal .card-body {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- navbar-->
+    <nav class="navbar navbar-expand-lg justify-content-between sticky-top">
+        <div class="container">
+            <a href="">
+                <h3 class="logo mt-1">😺 Murr<span>!</span></h3>
+            </a>
+            <button class="navbar-toggler" data-bs-toggle="collapse"
+                data-bs-target="navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <h2 class="mt-2"><i class="ri-menu-fold-2-line"></i></h2>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="about">מידע חיוני</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link store-link" href="store">החנות
+                            הורטואלית</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact">צור קשר</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="icon-section" id="navbarNav">
+                <div class="row">
+                    <div class="nav-item col-4">
+                        <a class="nav-link" href="liked">
+                            <h5 class="mt-2"><i
+                                    class="ri-heart-fill active"></i></h5>
+                        </a>
+                    </div>
+                    <div class="nav-item col-4">
+                        <a class="nav-link" href="cart">
+                            <h5 class="mt-2"><i class="ri-shopping-cart-fill">
+                            </h5></i>
+                        </a>
+                    </div>
+                    <div class="nav-item col-4">
+                        <a class="nav-link" href="profile">
+                            <h5 class="mt-2"><i class="ri-user-fill"></i></h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- <a href="" class="btn btn-brand ms-lg-3">Download</a> -->
+        </div>
+    </nav>
+    <!-- navbar-->
+    <!-- cart -->
+    <section id="cart" class="min-vh-100 d-flex">
+        <div class="container">
+            <h1 class="my-4">עגלת קניות</h1>
+    
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="search-bar mb-4">
+                        <form class="form-inline">
+                            <div class="input-group">
+                                <input class="form-control" type="search" placeholder="חיפוש" aria-label="חיפוש">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success" type="submit">חפש</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row" id="cart-items-container">
+                        <!-- Dynamic cart items will be inserted here -->
+                    </div>
+                    <div class="sticky-footer">
+                        <div class="container d-flex justify-content-between align-items-center">
+                            <h4 id="total-price">סך הכל: ₪0.00</h4>
+                            <button class="btn btn-primary btn-lg">סיום רכישה</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- </section> -->
+    <!-- cart -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Array of cart items
+        const cartItems = [
+            { id: 1, name: 'מזון חתולים 1', brand: 'מותג א', type: 'מזון יבש', price: 15, quantity: 1, imgSrc: 'https://via.placeholder.com/150' },
+            { id: 2, name: 'מזון חתולים 2', brand: 'מותג ב', type: 'מזון רטוב', price: 25, quantity: 2, imgSrc: 'https://via.placeholder.com/150' },
+            { id: 3, name: 'מזון חתולים 3', brand: 'מותג ג', type: 'חטיפים', price: 5, quantity: 3, imgSrc: 'https://via.placeholder.com/150' },
+            { id: 4, name: 'מזון חתולים 4', brand: 'מותג ד', type: 'מזון יבש', price: 15, quantity: 1, imgSrc: 'https://via.placeholder.com/150' },
+            { id: 5, name: 'מזון חתולים 5', brand: 'מותג ה', type: 'מזון רטוב', price: 25, quantity: 2, imgSrc: 'https://via.placeholder.com/150' },
+            { id: 6, name: 'מזון חתולים 6', brand: 'מותג ו', type: 'חטיפים', price: 5, quantity: 3, imgSrc: 'https://via.placeholder.com/150' }
+        ];
+
+        // Function to render cart items
+        function renderCartItems() {
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = ''; // Clear existing items
+            let totalPrice = 0;
+
+            cartItems.forEach(item => {
+                totalPrice += item.price * item.quantity;
+                const itemHTML = `
+                    <div class="col-12 mb-4">
+                        <div class="card card-horizontal">
+                            <img src="${item.imgSrc}" class="card-img-top" alt="${item.name}">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.name}</h5>
+                                <p class="card-text">${item.brand} - ${item.type}</p>
+                                <p class="card-text">₪${item.price}</p>
+                                <div class="d-flex align-items-center">
+                                    <input type="number" class="form-control mr-3" value="${item.quantity}" min="1" style="width: 60px;" onchange="updateQuantity(${item.id}, this.value)">
+                                    <button class="btn btn-info mr-3" onclick="showInfo(${item.id})">מידע</button>
+                                    <button class="btn btn-danger" onclick="removeFromCart(${item.id})">הסר</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            document.getElementById('total-price').innerText = `סך הכל: ₪${totalPrice.toFixed(2)}`;
+        }
+
+        // Function to update item quantity
+        function updateQuantity(itemId, newQuantity) {
+            const item = cartItems.find(item => item.id === itemId);
+            if (item) {
+                item.quantity = parseInt(newQuantity);
+                renderCartItems();
+            }
+        }
+
+        // Function to show item info
+        function showInfo(itemId) {
+            const item = cartItems.find(item => item.id === itemId);
+            if (item) {
+                alert(`מידע על ${item.name}:\nמותג: ${item.brand}\nסוג: ${item.type}\nמחיר: ₪${item.price}`);
+            }
+        }
+
+        // Function to remove item from cart
+        function removeFromCart(itemId) {
+            const itemIndex = cartItems.findIndex(item => item.id === itemId);
+            if (itemIndex > -1) {
+                cartItems.splice(itemIndex, 1);
+                renderCartItems(); // Re-render the items after removal
+            }
+        }
+
+        // Render cart items on page load
+        document.addEventListener('DOMContentLoaded', renderCartItems);
+    </script>
+</body>
+</html>
