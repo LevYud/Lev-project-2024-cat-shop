@@ -73,3 +73,11 @@
   .navbar .icon-section .active{
     color: var(--c-brand);
   }
+
+  .navbar #loginButton{
+    background-color: transparent;
+    border: none;
+    outline: none; 
+  }
+
+

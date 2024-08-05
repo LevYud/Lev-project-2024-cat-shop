@@ -38,14 +38,18 @@
                         </h5></i>
                     </a>
                 </div>
-                <div class="nav-item col-4">
-                    <a href="profile">
+                <button  type="button" class="nav-item col-4" id="loginButton">
+                    <!-- <a href="profile"> -->
                         <h5 class="mt-2"><i class="ri-user-fill nav-link <%= currentPage==='profile'?'active':'non-active'  %> "></i></h5>
-                    </a>
-                </div>
+                    <!-- </a> -->
+                </button >
             </div>
         </div>
         <!-- <a href="" class="btn btn-brand ms-lg-3">Download</a> -->
     </div>
 </nav>
+
+<div id="loginFormContent" style="display: none;">
+    <%- include('login.ejs') %>
+</div>
 <!-- navbar-->
