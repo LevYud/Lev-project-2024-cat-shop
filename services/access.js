@@ -2,17 +2,18 @@ const User = require("../models/User");
 
 async function login(username, password) {
     const user = await User.findOne({ _id: username, password });
-    return user != null
+    return user;
 }
 
-async function register(username, password) {
+async function register(username, password, email, phone, address, status) {
 
     const user = new User({
         _id: username,
-        password
+        password, email, phone, address, status
     });
 
-    await user.save()        
+    await user.save();
+    return user;        
 }
 
 module.exports = { login, register }

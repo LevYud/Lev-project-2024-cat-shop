@@ -27,7 +27,7 @@ async function login(req, res) {
   const { username, password } = req.body;
   const result = await accessService.login(username, password);
   if (result) {
-    res.json({'status':"customer",'username':username,'password':password});
+    res.json({'status':result.status,'username':result.username,'password':result.password});
   }
   else{
     res.json({status:null});
@@ -35,16 +35,14 @@ async function login(req, res) {
 }
 
 async function register(req, res) {
-  console.log("register");
-  // const { username, password } = req.body
-  // try {
-  //   await accessService.register(username, password)    
-  //   req.session.username = username
-  //   res.redirect('/profile')
-  // }
-  // catch (e) { 
-  //   res.redirect('/register?error=1')
-  // }    
+  const { username, password, email, phone, address } = req.body
+  try {
+    const result = await accessService.register(username, password, email, phone, address,'customer')    
+    res.json({'status':result.status,'username':result.username,'password':result.password});
+  }
+  catch (e) { 
+    res.json({status:null});
+  }    
 }
 
 module.exports = {
