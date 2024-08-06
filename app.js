@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
-const routes = require('./routes/router');
+
+const pagersRouter = require('./routes/pagersRouter.js');
+const accessRouter = require('./routes/accessRouter');
 // const api = require('./routes/api');
 
 require('custom-env').env(process.env.NODE_ENV, './config');
@@ -30,7 +32,8 @@ server.use(session({
     resave: false
 }))
 
-server.use("/", require("./routes/router"));
+server.use('/', pagersRouter);
+server.use('/access', accessRouter);
 // app.use('/api', api);
 // server.use('', routes);
 

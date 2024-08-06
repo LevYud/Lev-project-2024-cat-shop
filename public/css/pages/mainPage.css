@@ -1,6 +1,6 @@
 #main {
     background: linear-gradient(rgba(var(--c-brand-rgb)), rgba(0, 0, 0, 0.437)),
-      url(../images/hero.jpg);
+      url(../../images/hero.jpg);
     background-position: center;
     background-size: cover;
   }
