@@ -52,7 +52,6 @@ module.exports = {
   getLoginForm,
   register,
   getRegisterForm,
-  logout,
   profile,
   isLoggedIn
 }
