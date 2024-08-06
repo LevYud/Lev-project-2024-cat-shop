@@ -1,8 +1,7 @@
 // login------------------------------------------------------------------
 
-async function login(username, password) {
-  console.log(username, password);
-  const res = await fetch("http://localhost:8082/access/login", {
+async function loginCheck(username, password) {
+  const res = await fetch("http://localhost:8082/user/loginCheck", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -13,26 +12,29 @@ async function login(username, password) {
     }),
   });
   const json = await res.json();
-  if (json && json.status) {
-    localStorage.setItem("status", json.status);
-    localStorage.setItem("username", json.username);
-    localStorage.setItem("password", json.password);
-    location.reload();
+  if (json.status && json.status && json.username && json.password) {
+    return json;
   } else {
-    console.log("oof");
+    return null;
   }
 }
 
-function submitLogin() {
+async function submitLogin() {
   var username = document.getElementById("popover-username").value;
   var password = document.getElementById("popover-password").value;
-  if (username && password) login(username, password);
+  if (username && password) {
+    const json = await loginCheck(username, password);
+    if (json) {
+      localStorage.setItem("username", json.username);
+      localStorage.setItem("password", json.password);
+      location.reload();
+    } else console.log("no no");
+  }
 }
 
 // logout------------------------------------------------------------------
 
 function submitLogout() {
-  if (localStorage.getItem("status")) localStorage.removeItem("status");
   if (localStorage.getItem("username")) localStorage.removeItem("username");
   if (localStorage.getItem("password")) localStorage.removeItem("password");
   location.reload();
@@ -40,8 +42,8 @@ function submitLogout() {
 
 // Register------------------------------------------------------------------
 
-async function Register(username, password, email, phone, address) {
-  const res = await fetch("http://localhost:8082/access/register", {
+async function register(username, password, email, phone, address) {
+  const res = await fetch("http://localhost:8082/user/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -55,22 +57,25 @@ async function Register(username, password, email, phone, address) {
     }),
   });
   const json = await res.json();
-  if (json.status) {
-    localStorage.setItem("status", json.status);
-    localStorage.setItem("username", json.username);
-    localStorage.setItem("password", json.password);
-    location.reload();
+  if (json.status && json.status && json.username && json.password) {
+    return json;
   } else {
-    console.log("oof");
+    return null;
   }
 }
 
-function submitRegister() {
+async function submitRegister() {
   var username = document.getElementById("register-username").value;
   var password = document.getElementById("register-password").value;
   var email = document.getElementById("register-email").value;
   var phone = document.getElementById("register-phone").value;
   var address = document.getElementById("register-address").value;
-  if (username && password && email && phone && address)
-    Register(username, password, email, phone, address);
+  if (username && password && email && phone && address) {
+    const json = await register(username, password, email, phone, address);
+    if (json) {
+      localStorage.setItem("username", json.username);
+      localStorage.setItem("password", json.password);
+      location.reload();
+    } else console.log("no no");
+  }
 }

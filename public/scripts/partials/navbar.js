@@ -1,10 +1,4 @@
-const currentURL = () => {
-  if (localStorage.getItem("status")) return "ajax/logout.ejs";
-  return "ajax/login.ejs";
-};
-
 const loadPopoverContent = (url, popoverVisible) => {
-  console.log(url);
   $.ajax({
     url: url,
     method: "GET",
@@ -44,11 +38,17 @@ const loadPopoverContent = (url, popoverVisible) => {
   });
 };
 
-$(document).ready(function () {
+$(document).ready(async function () {
+  var status = null;
+  if (localStorage.getItem("username") && localStorage.getItem("password")){
+    const json = await loginCheck(localStorage.getItem("username"), localStorage.getItem("password"));
+    if(json) status=json.status;
+  }
+
   var popoverVisible = false;
 
   // Load the initial popover content
-  loadPopoverContent(currentURL(), popoverVisible);
+  loadPopoverContent(status?"ajax/logout.ejs":"ajax/login.ejs", popoverVisible);
 
   // Toggle the popover on button click
   $("#loginButton").click(function () {
@@ -56,8 +56,12 @@ $(document).ready(function () {
       $("#loginButton").popover("hide");
     } else {
       $("#loginButton").popover("show");
-      //   loadPopoverContent(currentURL());
     }
     popoverVisible = !popoverVisible;
   });
+
+  if(!status) $("#cart").hide();
+
+
+
 });

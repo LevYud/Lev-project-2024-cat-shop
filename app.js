@@ -7,7 +7,7 @@ const cors = require('cors');
 const session = require('express-session');
 
 const pagersRouter = require('./routes/pagersRouter.js');
-const accessRouter = require('./routes/accessRouter');
+const userRouter = require('./routes/userRouter');
 // const api = require('./routes/api');
 
 require('custom-env').env(process.env.NODE_ENV, './config');
@@ -33,7 +33,7 @@ server.use(session({
 }))
 
 server.use('/', pagersRouter);
-server.use('/access', accessRouter);
+server.use('/user', userRouter);
 // app.use('/api', api);
 // server.use('', routes);
 

@@ -1,8 +1,8 @@
-const accessService = require("../services/access")
+const userService = require("../services/userService")
 
-async function login(req, res) {
+async function loginCheck(req, res) {
   const { username, password } = req.body;
-  const result = await accessService.login(username, password);
+  const result = await userService.loginCheck(username, password);
   if (result) {
     res.json({'status':result.status,'username':result._id,'password':result.password});
   }
@@ -14,7 +14,7 @@ async function login(req, res) {
 async function register(req, res) {
   const { username, password, email, phone, address } = req.body
   try {
-    const result = await accessService.register(username, password, email, phone, address,'customer')    
+    const result = await userService.register(username, password, email, phone, address,'customer')    
     res.json({'status':result.status,'username':result._id,'password':result.password});
   }
   catch (e) { 
@@ -23,6 +23,6 @@ async function register(req, res) {
 }
 
 module.exports = {
-  login,
+  loginCheck,
   register
 }
